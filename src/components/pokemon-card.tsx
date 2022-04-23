@@ -1,6 +1,8 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import Pokemon from '../models/pokemon';
 import './pokemon-card.css';
+import formatType from "../helpers/format-type";
+import formatDate from '../helpers/format-date'; 
 
 type Props = {
     pokemon: Pokemon,
@@ -22,56 +24,6 @@ const PokemonCard: FunctionComponent<Props> = ({ pokemon, borderColor = "#009683
         setColor("#f5f5f5")
     }
 
-    // pour affecter des couleurs différentes selon le type de pokemon
-    const formatType = (type: string): string => {
-        let color: string;
-
-        switch (type) {
-            case 'Feu':
-                color = 'red lighten-1';
-                break;
-            case 'Eau':
-                color = 'blue lighten-1';
-                break;
-            case 'Plante':
-                color = 'green lighten-1';
-                break;
-            case 'Insecte':
-                color = 'brown lighten-1';
-                break;
-            case 'Normal':
-                color = 'grey lighten-3';
-                break;
-            case 'Vol':
-                color = 'blue lighten-3';
-                break;
-            case 'Poison':
-                color = 'deep-purple accent-1';
-                break;
-            case 'Fée':
-                color = 'pink lighten-4';
-                break;
-            case 'Psy':
-                color = 'deep-purple darken-2';
-                break;
-            case 'Electrik':
-                color = 'lime accent-1';
-                break;
-            case 'Combat':
-                color = 'deep-orange';
-                break;
-            default:
-                color = 'grey';
-                break;
-        }
-
-        return `chip ${color}`;
-    }
-
-    // en applicant cette méthode, la propriété created deviendra une propriété calculée
-    const formatDate = (date: Date): string => {
-        return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-    }
 
     return (
         <div className="col s6 m4" onMouseEnter={showColor} onMouseLeave={hideColor}>
