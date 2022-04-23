@@ -3,7 +3,7 @@ import Pokemon from '../models/pokemon';
 import POKEMONS from '../models/mock-pokemon';
 import PokemonCard from '../components/pokemon-card';
 
-const PokemonList: FunctionComponent = () => {
+const PokemonsList: FunctionComponent = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
 
   useEffect(() => {
@@ -24,4 +24,4 @@ const PokemonList: FunctionComponent = () => {
   );
 }
 
-export default PokemonList;
+export default PokemonsList;

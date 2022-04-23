@@ -1,23 +1,27 @@
-import React, {FunctionComponent, useEffect, useState} from 'react';
-import POKEMONS from './models/mock-pokemon';
-import Pokemon from './models/pokemon';
-import PokemonList from './pages/pokemon-list';
-  
-const App: FunctionComponent = () => {
-//  const name: String = 'React';
-// const[name, setName] = useState <string> ('React');
-// const[pokemon] = useState <Pokemon[]> (POKEMONS);
-const[pokemons, setPokemons] = useState <Pokemon[]> ([]);
-useEffect (() => {
-    setPokemons(POKEMONS)
-},[]);
+import React, { FunctionComponent } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import PokemonsList from './pages/pokemons-list';
+import PokemonDetail from './pages/pokemon-detail';
+
     
- return (
-//   <h1>Hello, the total amount of pokemons is {pokemons.length} !</h1>
-<div>
-    <PokemonList/>
-</div>
- )
-}
-  
-export default App;
+const App: FunctionComponent = () => {
+ 
+    return (
+      <Router>
+        <div>
+        <nav> 
+          <div className="nav-wrapper teal">
+            <Link to="/" className="brand-logo center">Pokédex</Link>
+          </div> 
+        </nav>
+        <Switch>
+        <Route exact path="/" component={PokemonsList} />
+        <Route exact path="/pokemons" component={PokemonsList} />
+        <Route exact path="/pokemon/:id" component={PokemonDetail} />
+       </Switch>
+        </div>
+      </Router>
+    );
+  }
+   
+  export default App;
