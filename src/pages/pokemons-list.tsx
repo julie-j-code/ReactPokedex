@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState, useEffect } from 'react';
 import Pokemon from '../models/pokemon';
 import POKEMONS from '../models/mock-pokemon';
 import PokemonCard from '../components/pokemon-card';
+import { useHistory } from 'react-router-dom';
 
 const PokemonsList: FunctionComponent = () => {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
@@ -9,6 +10,8 @@ const PokemonsList: FunctionComponent = () => {
   useEffect(() => {
     setPokemons(POKEMONS);
   }, []);
+
+ 
 
   return (
     <div>

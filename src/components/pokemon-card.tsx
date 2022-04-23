@@ -1,8 +1,10 @@
-import React, { FunctionComponent, useState} from 'react';
+import React, { FunctionComponent, useState } from 'react';
+// attention à l'import !!!
+import {useHistory} from 'react-router-dom';
 import Pokemon from '../models/pokemon';
 import './pokemon-card.css';
 import formatType from "../helpers/format-type";
-import formatDate from '../helpers/format-date'; 
+import formatDate from '../helpers/format-date';
 
 type Props = {
     pokemon: Pokemon,
@@ -17,6 +19,9 @@ const PokemonCard: FunctionComponent<Props> = ({ pokemon, borderColor = "#009683
     // on dissocie ainsi la couleur d'entrée de la props de la couleur de bordure
     // étant donné qu'elle bouge en fonction des interactions de l'utilisateur !
     const [color, setColor] = useState<string>();
+    // en lieu et place de link
+    const history = useHistory();
+
     const showColor = () => {
         setColor(borderColor)
     }
@@ -24,9 +29,13 @@ const PokemonCard: FunctionComponent<Props> = ({ pokemon, borderColor = "#009683
         setColor("#f5f5f5")
     }
 
+    const showPokemon = (id: number) => {
+        history.push(`/pokemon/${id}`)
+    }
+
 
     return (
-        <div className="col s6 m4" onMouseEnter={showColor} onMouseLeave={hideColor}>
+        <div className="col s6 m4" onClick={()=>showPokemon(pokemon.id)} onMouseEnter={showColor} onMouseLeave={hideColor}>
             <div className="card horizontal" style={{ borderColor: color }}>
                 <div className="card-image" >
                     <img src={pokemon.picture} alt={pokemon.name} />
