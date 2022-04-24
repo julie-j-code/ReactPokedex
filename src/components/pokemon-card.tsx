@@ -1,58 +1,50 @@
 import React, { FunctionComponent, useState } from 'react';
-// attention à l'import !!!
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Pokemon from '../models/pokemon';
-import './pokemon-card.css';
-import formatType from "../helpers/format-type";
 import formatDate from '../helpers/format-date';
+import formatType from '../helpers/format-type';
+import './pokemon-card.css';
 
 type Props = {
-    pokemon: Pokemon,
-    // une Props faculative ci-dessous
-    borderColor?: string
+  pokemon: Pokemon,
+  borderColor?: string
 };
 
-//   la valeur donnée à borderColor est valeur  par défaut. si component parent n'indique rien
-const PokemonCard: FunctionComponent<Props> = ({ pokemon, borderColor = "#009683" }) => {
+const PokemonCard: FunctionComponent<Props> = ({pokemon, borderColor = '#009688'}) => {
+ 
+  const [color, setColor] = useState<string>();
+  const history = useHistory();
+ 
+  const showBorder = () => {
+    setColor(borderColor);
+  };
+ 
+  const hideBorder = () => {
+    setColor('#f5f5f5');
+  };
 
-    // c'est tordu mais juste pour tester on ajoute un état pour stocker la couleur de la bordure ! 
-    // on dissocie ainsi la couleur d'entrée de la props de la couleur de bordure
-    // étant donné qu'elle bouge en fonction des interactions de l'utilisateur !
-    const [color, setColor] = useState<string>();
-    // en lieu et place de link
-    const history = useHistory();
-
-    const showColor = () => {
-        setColor(borderColor)
-    }
-    const hideColor = () => {
-        setColor("#f5f5f5")
-    }
-
-    const showPokemon = (id: number) => {
-        history.push(`/pokemon/${id}`)
-    }
-
-
-    return (
-        <div className="col s6 m4" onClick={()=>showPokemon(pokemon.id)} onMouseEnter={showColor} onMouseLeave={hideColor}>
-            <div className="card horizontal" style={{ borderColor: color }}>
-                <div className="card-image" >
-                    <img src={pokemon.picture} alt={pokemon.name} />
-                </div>
-                <div className="card-stacked">
-                    <div className="card-content">
-                        <p>{pokemon.name}</p>
-                        <p><small>Créé le {formatDate(pokemon.created)}</small></p>
-                        {/* <p><small>{pokemon.created.toString()}</small></p> */}
-                        <p>{pokemon.types.map(type => {
-                            return <span key={type} className={formatType(type)}>{type}</span>
-                        })}</p>
-                    </div>
-                </div>
-            </div>
+  const goToPokemon = (id: number) => {
+    history.push(`/pokemons/${id}`);
+  }
+ 
+  return (
+    <div className="col s6 m4" onMouseEnter={showBorder} onMouseLeave={hideBorder} onClick={() => goToPokemon(pokemon.id)}>
+      <div className="card horizontal" style={{ borderColor: color }}>
+        <div className="card-image"> 
+          <img src={pokemon.picture} alt={pokemon.name}/>
         </div>
-    );
+        <div className="card-stacked">
+          <div className="card-content">
+            <p>{pokemon.name}</p>
+            <p><small>{formatDate(pokemon.created)}</small></p>
+            {pokemon.types.map(type => (
+              <span key={type} className={formatType(type)}>{type}</span>
+            ))}
+          </div>
+        </div>
+      </div> 
+    </div>
+  );
 }
-
+ 
 export default PokemonCard;
